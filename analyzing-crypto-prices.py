@@ -4,8 +4,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-df_old = pd.read_csv("/content/BTC_USDT.csv", skiprows = [0])
+df_old = pd.read_csv("file_name_path", skiprows = [0])
 
+#df_old must contain a column name "date" and another one name "close"
 temporal = []
 for i in range(len(df_old)):
   if ("2021" in df_old["date"][i]) or ("2022" in df_old["date"][i]):
@@ -13,12 +14,14 @@ for i in range(len(df_old)):
 
 df_new = pd.DataFrame(temporal, columns = ["Date", "Price"])
 del temporal, df_old
+
 print(len(df_new))
 
-df_new.to_csv("BTC_USDT_1.csv", index = False)
+df_new.to_csv("file_name_path_1", index = False)
 
 print(df_new.head(5))
 
+#In order for this to work the "date" column should have the following format: YYYY-MM-DD HH:MM:SS
 df_new["Year"] = [int(df_new["Date"][i][0:4]) for i in range(len(df_new))]
 df_new["Month"] = [int(df_new["Date"][i][5:7]) for i in range(len(df_new))]
 df_new["Day"] = [int(df_new["Date"][i][8:10]) for i in range(len(df_new))]
@@ -33,9 +36,7 @@ del temp
 
 print(df_new.head(10))
 
-df_new[df_new.Index == 1]
-
-df_new.to_csv("BTC_USDT_2.csv", index = False)
+df_new.to_csv("file_name_path_2", index = False)
 
 df_new.drop(columns="Date", inplace = True)
 
@@ -45,7 +46,7 @@ del original_value
 
 print(df_new.head(10))
 
-df_new.to_csv("/content/BTC_USDT_3.csv", index = False)
+df_new.to_csv("file_name_path_3", index = False)
 
 crypto_series = pd.Series(list(df_new["Price"]), index = list(df_new["Index"]))
 
